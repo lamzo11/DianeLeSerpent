@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://qt3u88n1mlwc"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_h8u21"]
+[ext_resource type="Texture2D" uid="uid://bk4djpoujkpnc" path="res://gameAssets/Pixel Adventure 1/Free/Background/bg.png" id="2_f15iu"]
+[ext_resource type="PackedScene" uid="uid://bgki1h8423bxe" path="res://scenes/snake_segment.tscn" id="2_up6b5"]
+[ext_resource type="PackedScene" uid="uid://c64ugvkmmibgd" path="res://scenes/hud.tscn" id="3_xkvc1"]
+[ext_resource type="Texture2D" uid="uid://d3jwdsyfrqb5i" path="res://gameAssets/Pixel Adventure 1/Free/Main Characters/Ninja Frog/Fall (32x32).png" id="5_hng20"]
+[ext_resource type="PackedScene" uid="uid://iy70u52j3jj6" path="res://scenes/game_over_menu.tscn" id="6_ag2n1"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_h8u21")
+snake_scene = ExtResource("2_up6b5")
+
+[node name="BackGround" type="Sprite2D" parent="."]
+position = Vector2(500, 550)
+texture = ExtResource("2_f15iu")
+
+[node name="Hud" parent="." instance=ExtResource("3_xkvc1")]
+
+[node name="MoveTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="Food" type="Sprite2D" parent="."]
+texture = ExtResource("5_hng20")
+offset = Vector2(25, 25)
+
+[node name="GameOverMenu" parent="." instance=ExtResource("6_ag2n1")]
+process_mode = 2
+
+[connection signal="timeout" from="MoveTimer" to="." method="_on_move_timer_timeout"]
+[connection signal="restart" from="GameOverMenu" to="." method="_on_game_over_menu_restart"]
